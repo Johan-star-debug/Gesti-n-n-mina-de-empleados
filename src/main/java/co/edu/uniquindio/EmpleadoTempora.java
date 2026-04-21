@@ -1,4 +1,5 @@
-package co.edu.uniquindio;
+import co.edu.uniquindio.CategoriaEmpleado;
+import co.edu.uniquindio.Empleado;
 
 public class EmpleadoTemporal extends Empleado {
 
@@ -9,9 +10,13 @@ public class EmpleadoTemporal extends Empleado {
                             float descuentoSalud, float descuentoPension, CategoriaEmpleado categoria,
                             int diasTrabajados, float valorDia) {
 
-        super(nombre, documento, edad, 0, descuentoSalud, descuentoPension, categoria);
+        super();
         this.diasTrabajados = diasTrabajados;
         this.valorDia = valorDia;
+    }
+
+    public EmpleadoTemporal(String nombre, String documento, int edad, int i, float descuentoSalud, float descuentoPension, CategoriaEmpleado categoria) {
+        super();
     }
 
     @Override
@@ -19,4 +24,15 @@ public class EmpleadoTemporal extends Empleado {
         float salario = diasTrabajados * valorDia;
         return salario + calcularBonificacionCategoria();
     }
+
+    public int getDiasTrabajados() {
+        return 0;
+    }
+}
+
+    public int getHorasTrabajadas() {
+        return 0;
+    }
+
+public void main() {
 }
