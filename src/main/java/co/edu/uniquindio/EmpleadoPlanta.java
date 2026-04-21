@@ -10,7 +10,7 @@ public class EmpleadoPlanta extends Empleado {
                           float descuentoSalud, float descuentoPension, CategoriaEmpleado categoria,
                           String cargo, int horasExtra, float valorHoraExtra, float auxilioTransporte) {
 
-        super(nombre, documento, edad, (int) salarioBase, descuentoSalud, descuentoPension, categoria);
+        super();
         this.cargo = cargo;
         this.horasExtra = horasExtra;
         this.valorHoraExtra = valorHoraExtra;
@@ -20,5 +20,10 @@ public class EmpleadoPlanta extends Empleado {
     @Override
     public float calcularSalarioBruto() {
         return salarioBase + (horasExtra * valorHoraExtra) + auxilioTransporte + calcularBonificacionCategoria();
+    }
+
+    @Override
+    public float getSalarioBase() {
+        return 0;
     }
 }

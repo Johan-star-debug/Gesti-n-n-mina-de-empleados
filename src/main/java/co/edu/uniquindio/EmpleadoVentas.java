@@ -8,7 +8,7 @@ public class EmpleadoVentas extends Empleado {
                           float descuentoSalud, float descuentoPension, CategoriaEmpleado categoria,
                           float totalVentas, float porcentajeComision) {
 
-        super(nombre, documento, edad, salarioBase, descuentoSalud, descuentoPension, categoria);
+        super();
         this.totalVentas = totalVentas;
         this.porcentajeComision = porcentajeComision;
     }
@@ -17,5 +17,10 @@ public class EmpleadoVentas extends Empleado {
     public float calcularSalarioBruto() {
         float comision = totalVentas * porcentajeComision;
         return salarioBase + comision + calcularBonificacionCategoria();
+    }
+
+    @Override
+    public float getSalarioBase() {
+        return 0;
     }
 }

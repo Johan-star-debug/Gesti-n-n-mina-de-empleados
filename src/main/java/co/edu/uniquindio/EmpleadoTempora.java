@@ -25,6 +25,11 @@ public class EmpleadoTemporal extends Empleado {
         return salario + calcularBonificacionCategoria();
     }
 
+    @Override
+    public float getSalarioBase() {
+        return 0;
+    }
+
     public int getDiasTrabajados() {
         return 0;
     }

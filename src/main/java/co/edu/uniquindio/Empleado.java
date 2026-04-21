@@ -4,7 +4,7 @@ import java.util.List;
 
 public abstract class Empleado {
     protected String nombre;
-    protected String documento;
+    public String documento;
     protected int edad;
     protected float salarioBase;
     protected float descuentoSalud;
@@ -12,9 +12,13 @@ public abstract class Empleado {
     protected static CategoriaEmpleado CategoriaEmpleado;
     protected List<ResumenPago> listaResumenPago = new ArrayList<>();
 
-    public Empleado(String nombre, String documento, int edad, int i, float descuentoSalud, float descuentoPension, CategoriaEmpleado categoria) {
+    public Empleado() {
     }
-    Enum<CategoriaEmpleado> CategoriaEmpleado() {
+
+    public Empleado(String mario, int i) {
+    }
+
+    public Enum<CategoriaEmpleado> CategoriaEmpleado() {
         return CategoriaEmpleado;
     }
 
@@ -73,4 +77,10 @@ public abstract class Empleado {
                 ", salarioNeto=" + calcularSalarioNeto() +
                 '}';
     }
+
+    public Object getDocumento() {
+        return null;
+    }
+
+    public abstract float getSalarioBase();
 }

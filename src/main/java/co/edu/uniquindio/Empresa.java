@@ -1,92 +1,111 @@
 package co.edu.uniquindio;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Empresa {
 
-    private String nombre;
-    private List<Empleado> listaEmpleados = new ArrayList<>();
+    private List<Empleado> empleados = new ArrayList<>();
 
-    public Empresa(String nombre) {
-        this.nombre = nombre;
+    // Obtener empleados
+    public List<Empleado> getEmpleados() {
+        return empleados;
     }
 
+    // Agregar empleado (evita duplicados)
     public void agregarEmpleado(Empleado e) {
-        listaEmpleados.add(e);
-    }
-
-    public void mostrarEmpleados() {
-        listaEmpleados.stream()
-                .forEach(e -> {
-                    System.out.println(e);
-                    System.out.println("-------------------");
-                });
-    }
-    public Empleado buscarEmpleado(String documento) {
-        if (documento == null)
-            return null;
-
-        return listaEmpleados.stream()
-                .filter(e -> e.documento.equals(documento))
-                .findFirst()
-                .orElse(null);
-
-    }
-    public void mostrarResumenPagos() {
-        listaEmpleados.stream()
-                .forEach(e -> System.out.println(e.generarResumenPago()));
-    }
-
-    public float calcularNominaTotal() {
-        float total = 0;
-        for (Empleado e : listaEmpleados) {
-            total += e.calcularSalarioNeto();
+        for (Empleado emp : empleados) {
+            if (emp.getDocumento().equals(e.getDocumento())) {
+                throw new IllegalArgumentException("Empleado duplicado");
+            }
         }
-        return total;
+        empleados.add(e);
     }
 
-    public List<Empleado> filtrarPorCategoria(CategoriaEmpleado categoria) {
-        List<Empleado> resultado = new ArrayList<>();
-
-        listaEmpleados.stream()
-                .filter(e -> e.CategoriaEmpleado() == categoria)
-                .forEach(resultado::add);
-
-        return resultado;
+    // Buscar por documento
+    public Empleado buscarPorDocumento(String doc) {
+        for (Empleado e : empleados) {
+            if (e.getDocumento().equals(doc)) {
+                return e;
+            }
+        }
+        return null;
     }
 
-    public List<EmpleadoVentas> obtenerEmpleadosVentas() {
-        List<EmpleadoVentas> resultado = new ArrayList<>();
+    // Empleado con mayor salario
+    public Empleado getEmpleadoConMayorSalario() {
+        Empleado max = null;
+        double mayor = -1;
 
-        listaEmpleados.stream()
-                .filter(e -> e instanceof EmpleadoVentas)
-                .forEach(e -> resultado.add((EmpleadoVentas) e));
-
-        return resultado;
+        for (Empleado e : empleados) {
+            double salario = e.calcularSalarioNeto();
+            if (salario > mayor) {
+                mayor = salario;
+                max = e;
+            }
+        }
+        return max;
     }
+    public List<EmpleadoTemporal> temporalesMasDe100Horas() {
+        List<EmpleadoTemporal> resultado = new ArrayList<>();
 
-    public Empleado obtenerMejorPagado() {
-        if (listaEmpleados.isEmpty()) return null;
-
-        Empleado mejor = listaEmpleados.get(0);
-
-        for (Empleado e : listaEmpleados) {
-            if (e.calcularSalarioNeto() > mejor.calcularSalarioNeto()) {
-                mejor = e;
+        for (Empleado e : empleados) {
+            if (e instanceof EmpleadoTemporal t) {
+                if (t.getHorasTrabajadas() > 100) {
+                    resultado.add(t);
+                }
             }
         }
 
-        return mejor;
+        return resultado;
     }
 
-    public double promedioSalarios() {
-        if (listaEmpleados.isEmpty()) return 0;
+    // Empleados con salario mayor a un valor
+    public List<Empleado> empleadosConSalarioMayorA(double valor) {
+        List<Empleado> resultado = new ArrayList<>();
 
-        float suma = 0;
-        for (Empleado e : listaEmpleados) {
-            suma += e.calcularSalarioNeto();
+        for (Empleado e : empleados) {
+            if (e.calcularSalarioNeto() > valor) {
+                resultado.add(e);
+            }
         }
 
-        return suma / listaEmpleados.size();
+        return resultado;
+    }
+
+    // Mostrar empleados
+    public void mostrarEmpleados() {
+        for (Empleado e : empleados) {
+            System.out.println(e);
+        }
+    }
+
+    // Buscar empleado
+    public Empleado buscarEmpleado(String doc) {
+        return buscarPorDocumento(doc);
+    }
+
+    // Mejor pagado
+    public Empleado obtenerMejorPagado() {
+        return getEmpleadoConMayorSalario();
+    }
+
+    // Nómina total
+    public double calcularNominaTotal() {
+        double total = 0;
+
+        for (Empleado e : empleados) {
+            total += e.calcularSalarioNeto();
+        }
+
+        return total;
+    }
+
+    // Resumen pagos
+    public void mostrarResumenPagos() {
+        for (Empleado e : empleados) {
+            System.out.println("Empleado: " + e.getDocumento()
+                    + " | Salario: " + e.calcularSalarioNeto());
+        }
     }
 }
